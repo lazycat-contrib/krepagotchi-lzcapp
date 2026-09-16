@@ -3,11 +3,11 @@ application:
   upstreams:
     - location: /
       backend: http://web:80/
-
 services:
   web:
     # ghcr.io/danielbrendel/krepagotchi-game:v1.0
-    image: ghcr.io/danielbrendel/krepagotchi-game:v1.0
+    # upstream: ghcr.io/danielbrendel/krepagotchi-game:v1.0
+    image: registry.lazycat.cloud/czyt/danielbrendel/krepagotchi-game:53844e9269d4e4e2
     environment:
       - APP_GAMERESX=360
       - APP_GAMERESY=640
@@ -34,10 +34,10 @@ services:
       - /lzcapp/var/migrations:/var/www/html/app/migrations
     depends_on:
       - db
-
   db:
     # docker.io/library/mariadb:11.4
-    image: mariadb:11.4
+    # upstream: library/mariadb:11.4.13
+    image: registry.lazycat.cloud/czyt/library/mariadb:244e241e9f01a6ab
     environment:
       - MARIADB_ROOT_PASSWORD={{ stable_secret "db_root_password" }}
       - MARIADB_DATABASE=krepagotchi
