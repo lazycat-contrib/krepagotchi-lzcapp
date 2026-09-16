@@ -1,0 +1,66 @@
+version: 1
+
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: dist/application.lpk
+  target_arch: amd64
+
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: web
+
+build:
+  run_buildscript: false
+
+images:
+  # 版本源镜像：上游使用 vMAJOR.MINOR 两段式 tag，映射为 MAJOR.MINOR.0 SemVer
+  - id: web
+    target: service
+    service: web
+    source: ghcr.io/danielbrendel/krepagotchi-game
+    channel: custom
+    sort: semver
+    tag_regex: '^v\d+\.\d+$'
+    version_regex: '^v(?P<version>\d+\.\d+)$'
+    version_template: '{version}.0'
+    delivery:
+      mode: lazycat
+  # 数据库镜像：固定 11.4 LTS 家族，仅自动跟进补丁版本
+  - id: db
+    target: service
+    service: db
+    source: library/mariadb
+    channel: stable
+    sort: semver
+    tag_regex: '^11\.4(\.\d+)?$'
+    delivery:
+      mode: lazycat
+
+stores:
+  official:
+    enabled: true
+    continue_if_newer_version: true
+    skip_if_version_exists: true
+    create_if_missing: true
+    changelog_locales: [zh, en]
+    retry:
+      enabled: false
+    application:
+      language: zh
+      name: Krepagotchi
+      brief: 像素风虚拟宠物游戏，照顾你的小 Krepa
+      description: 像素风虚拟宠物游戏。你可以喂食、清洁小窝、生病时治疗它，还能抚摸或陪它玩耍（随机球类游戏或戳泡泡）来增进感情。饱食度耗尽、好感归零或小窝脏乱都会影响宠物健康；健康归零时 Krepa 会爆炸，然后你可以重新开始养一只新宠物。支持信件收发、生日庆祝、跨年夜派对、生态群落选择、天气效果等丰富特性。
+      keywords: 游戏,宠物,像素,虚拟宠物,休闲
+      source: https://github.com/danielbrendel/krepagotchi-game
+      source_author: danielbrendel
+      support_pc: true
+      screenshot_pc_files:
+        - screenshots/pc-1.png
+        - screenshots/pc-2.png
+  private:
+    enabled: false

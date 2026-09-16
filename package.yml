@@ -1,0 +1,14 @@
+package: community.lazycat.app.krepagotchi
+version: 1.0.0
+name: Krepagotchi
+description: "A pixelated, adorable virtual pet game"
+min_os_version: "1.5.0"
+homepage: https://github.com/danielbrendel/krepagotchi-game
+author: danielbrendel
+locales:
+  zh:
+    description: "像素风虚拟宠物游戏：喂食、清洁、玩耍、治疗，照顾你的小 Krepa"
+    name: Krepagotchi
+  en:
+    description: "A pixelated, adorable virtual pet game"
+    name: Krepagotchi

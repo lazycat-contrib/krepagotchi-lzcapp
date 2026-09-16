@@ -1,0 +1,47 @@
+application:
+  subdomain: krepagotchi
+  upstreams:
+    - location: /
+      backend: http://web:80/
+
+services:
+  web:
+    # ghcr.io/danielbrendel/krepagotchi-game:v1.0
+    image: ghcr.io/danielbrendel/krepagotchi-game:v1.0
+    environment:
+      - APP_GAMERESX=360
+      - APP_GAMERESY=640
+      - APP_ENABLELETTERS=1
+      - APP_BACKEND=http://{{ .S.AppDomain }}
+      - APP_MAXCOUNT_PICK=3
+      - APP_MAXCOUNT_ADD=2
+      - APP_ACCESSTOKEN={{ stable_secret "app_accesstoken" }}
+      - APP_TIMEZONE=UTC
+      - APP_DEBUG=0
+      - APP_UPDATEDEPS=0
+      - KREPA_INITIAL_HEALTH=90
+      - KREPA_INITIAL_AFFECTION=70
+      - KREPA_INITIAL_FULLNESS=50
+      - LOG_ENABLE=1
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=krepagotchi
+      - DB_USERNAME=krepagotchi
+      - DB_PASSWORD={{ stable_secret "db_password" }}
+      - DB_CHARSET=utf8mb4
+    binds:
+      - /lzcapp/var/logs:/var/www/html/app/logs
+      - /lzcapp/var/migrations:/var/www/html/app/migrations
+    depends_on:
+      - db
+
+  db:
+    # docker.io/library/mariadb:11.4
+    image: mariadb:11.4
+    environment:
+      - MARIADB_ROOT_PASSWORD={{ stable_secret "db_root_password" }}
+      - MARIADB_DATABASE=krepagotchi
+      - MARIADB_USER=krepagotchi
+      - MARIADB_PASSWORD={{ stable_secret "db_password" }}
+    binds:
+      - /lzcapp/var/db:/var/lib/mysql
