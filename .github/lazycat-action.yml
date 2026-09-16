@@ -43,24 +43,10 @@ images:
 
 stores:
   official:
-    enabled: true
-    continue_if_newer_version: true
-    skip_if_version_exists: true
-    create_if_missing: true
-    changelog_locales: [zh, en]
-    retry:
-      enabled: false
-    application:
-      language: zh
-      name: Krepagotchi
-      brief: 像素风虚拟宠物游戏，照顾你的小 Krepa
-      description: 像素风虚拟宠物游戏。你可以喂食、清洁小窝、生病时治疗它，还能抚摸或陪它玩耍（随机球类游戏或戳泡泡）来增进感情。饱食度耗尽、好感归零或小窝脏乱都会影响宠物健康；健康归零时 Krepa 会爆炸，然后你可以重新开始养一只新宠物。支持信件收发、生日庆祝、跨年夜派对、生态群落选择、天气效果等丰富特性。
-      keywords: 游戏,宠物,像素,虚拟宠物,休闲
-      source: https://github.com/danielbrendel/krepagotchi-game
-      source_author: danielbrendel
-      support_pc: true
-      screenshot_pc_files:
-        - screenshots/pc-1.png
-        - screenshots/pc-2.png
-  private:
+    # Official store publication is intentionally disabled; publish only to Miaomiao Store.
     enabled: false
+  private:
+    enabled: true
+    skip_if_version_exists: true
+    name: Krepagotchi
+    summary: "像素风虚拟宠物游戏：喂食、清洁、玩耍、治疗，照顾你的小 Krepa"

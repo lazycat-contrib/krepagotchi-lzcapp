@@ -20,20 +20,22 @@
 - 数据库密码、root 密码与 `APP_ACCESSTOKEN` 使用 `stable_secret` 生成稳定随机值。
 - `APP_BACKEND` 由 `{{ .S.AppDomain }}` 动生成为应用实际域名。
 - 上游 tag 为 `vMAJOR.MINOR` 两段式，Action 配置将其映射为 `MAJOR.MINOR.0` 包版本。
-- 仅发布官方喵喵商店；镜像经 `registry.lazycat.cloud` 投递。
+- 仅发布喵喵商店（MiaoMiao 社区商店）；官方平台不发布；镜像经 `registry.lazycat.cloud` 投递。
 
 ## 自动化
 
-`lazycat.yml` 工作流（每日定时 + 手动触发）自动：
+`lazycat.yml` 工作流（配置文件 PR 时 dry-run 验证、每日定时 + 手动触发）自动：
 
 1. 检查上游 `ghcr.io/danielbrendel/krepagotchi-game` 新 tag；
 2. 更新版本与 manifest、复制镜像到懒猫镜像仓库；
 3. 构建 LPK、发布 GitHub Release；
-4. 提交喵喵商店审核。
+4. 发布喵喵商店。
 
 ## 所需 Secrets
 
 | Secret | 说明 |
 | --- | --- |
-| `LZC_API_TOKEN` | 懒猫开放平台 PAT（发布商店必需） |
-| `LZC_API_HOST` | 可选，PAT API 地址覆盖 |
+| `APPSTORE_URL` | 喵喵商店 API 地址 |
+| `APPSTORE_TOKEN` | 喵喵商店发布令牌 |
+| `APP_ID` | 可选，喵喵商店应用 ID |
+| `PRIVATE_STORE_GROUP_CODES` | 可选，私有分组码 |
