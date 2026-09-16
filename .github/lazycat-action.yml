@@ -29,7 +29,7 @@ images:
     version_regex: '^v(?P<version>\d+\.\d+)$'
     version_template: '{version}.0'
     delivery:
-      mode: lazycat
+      mode: mirror
   # 数据库镜像：固定 11.4 LTS 家族，仅自动跟进补丁版本
   - id: db
     target: service
@@ -39,7 +39,7 @@ images:
     sort: semver
     tag_regex: '^11\.4(\.\d+)?$'
     delivery:
-      mode: lazycat
+      mode: mirror
 
 stores:
   official:

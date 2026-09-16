@@ -20,14 +20,14 @@
 - 数据库密码、root 密码与 `APP_ACCESSTOKEN` 使用 `stable_secret` 生成稳定随机值。
 - `APP_BACKEND` 由 `{{ .S.AppDomain }}` 动生成为应用实际域名。
 - 上游 tag 为 `vMAJOR.MINOR` 两段式，Action 配置将其映射为 `MAJOR.MINOR.0` 包版本。
-- 仅发布喵喵商店（MiaoMiao 社区商店）；官方平台不发布；镜像经 `registry.lazycat.cloud` 投递。
+- 镜像模式（mirror delivery）：manifest 经国内加速器（`ghcr.1ms.run` / `docker.1ms.run`）引用上游镜像，不复制到懒猫镜像仓库；仅发布喵喵商店。
 
 ## 自动化
 
 `lazycat.yml` 工作流（配置文件 PR 时 dry-run 验证、每日定时 + 手动触发）自动：
 
 1. 检查上游 `ghcr.io/danielbrendel/krepagotchi-game` 新 tag；
-2. 更新版本与 manifest、复制镜像到懒猫镜像仓库；
+2. 更新版本与 manifest 中的加速器镜像引用；
 3. 构建 LPK、发布 GitHub Release；
 4. 发布喵喵商店。
 
