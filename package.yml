@@ -1,4 +1,5 @@
 package: community.lazycat.app.krepagotchi
+license: MIT
 version: 1.0.0
 name: Krepagotchi
 description: "A pixelated, adorable virtual pet game"
